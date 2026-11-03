@@ -1,0 +1,6 @@
+{
+  "name": "CMC Guelmim · M101 Infrastructure Digitale",
+  "description": "Plateforme pédagogique interactive du module M101 (Métier et Formation en Infrastructure Digitale - 15h) pour la Cité des Métiers et des Compétences de Guelmim-Oued Noun.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
