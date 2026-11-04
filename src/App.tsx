@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import {
   Menu,
-  X,
   Home,
   Layers,
   Compass,
@@ -14,7 +13,7 @@ import {
   BookOpen,
   Building2,
   ChevronRight,
-  MonitorPlay,
+  ChevronLeft,
 } from 'lucide-react';
 import { CmcGuelmimSection } from './components/CmcGuelmimSection';
 import { OptionsExplorer } from './components/OptionsExplorer';
@@ -36,7 +35,7 @@ const NAV_SECTIONS: NavSectionItem[] = [
   {
     id: 'accueil-m101',
     shortCode: 'INTRO',
-    label: 'Introduction M101',
+    label: 'Introduction',
     subtitle: 'Métier & Skills Factory',
     icon: <Home className="w-5 h-5" />,
     hoverHex: '#009FE3',
@@ -52,7 +51,7 @@ const NAV_SECTIONS: NavSectionItem[] = [
   {
     id: 'career-simulator',
     shortCode: 'QUIZ',
-    label: 'Simulateur Métier',
+    label: 'Simulateur',
     subtitle: 'Choisir sa spécialité',
     icon: <Compass className="w-5 h-5" />,
     hoverHex: '#139A74',
@@ -60,7 +59,7 @@ const NAV_SECTIONS: NavSectionItem[] = [
   {
     id: 'active-labs',
     shortCode: 'CH 3',
-    label: 'Ateliers & Aptitudes',
+    label: 'Ateliers & Ch.3',
     subtitle: '4 Labs + Compétences',
     icon: <Wrench className="w-5 h-5" />,
     hoverHex: '#66437A',
@@ -113,12 +112,9 @@ export default function App() {
           onClick={() => setIsSidebarVisible(true)}
           title="Afficher le menu du cours M101"
           aria-label="Afficher le menu du cours M101"
-          className="fixed top-3 left-3 z-50 w-12 h-12 bg-[#EA5B0C] hover:bg-[#009FE3] text-white flex flex-col items-center justify-center shadow-lg border-2 border-white transition-colors cursor-pointer"
+          className="fixed top-1.5 left-2 z-50 w-9 h-9 bg-[#EA5B0C] hover:bg-[#009FE3] text-white flex items-center justify-center shadow-md transition-colors cursor-pointer"
         >
-          <Menu className="w-6 h-6" />
-          <span className="text-[9px] font-black uppercase tracking-tighter leading-none mt-0.5">
-            M101
-          </span>
+          <Menu className="w-5 h-5" />
         </button>
       )}
 
@@ -128,54 +124,48 @@ export default function App() {
       {isSidebarVisible && (
         <aside
           aria-label="Navigation principale COURS M101"
-          className={`fixed top-0 left-0 bottom-0 z-50 bg-[#EA5B0C] text-white border-r-2 border-white/25 flex flex-col justify-between transition-all duration-200 shadow-xl ${
-            isSidebarExpanded ? 'w-64' : 'w-20'
+          className={`fixed top-0 left-0 bottom-0 z-50 bg-[#EA5B0C] text-white flex flex-col justify-between transition-all duration-200 shadow-lg overflow-hidden ${
+            isSidebarExpanded ? 'w-56' : 'w-16'
           }`}
         >
-          {/* Top Hamburger Toggle + Expand/Collapse Button */}
+          {/* Top Hamburger Toggle (Strictly Contained Inside Sidebar Width) */}
           <div>
-            <div className="border-b-2 border-white/20 flex items-center justify-between p-2 gap-1 bg-[#d45008]">
+            <div className="h-12 border-b border-white/20 flex items-center justify-between px-2">
               <button
                 onClick={() => setIsSidebarVisible(false)}
                 title="Masquer la barre latérale"
                 aria-label="Masquer la barre latérale"
-                className="w-12 h-12 bg-black/20 hover:bg-[#005596] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                className="w-8 h-8 hover:bg-[#005596] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </button>
 
               {isSidebarExpanded && (
-                <div className="px-2 flex-1 min-w-0">
-                  <div className="text-xs font-black uppercase tracking-widest truncate">
-                    COURS M101
-                  </div>
-                  <div className="text-[10px] text-white/85 font-bold truncate">
-                    Infrastructure Digitale
-                  </div>
-                </div>
+                <span className="text-xs font-black uppercase tracking-wider truncate px-1 flex-1">
+                  COURS M101
+                </span>
               )}
 
               <button
                 onClick={() => setIsSidebarExpanded((prev) => !prev)}
-                title={isSidebarExpanded ? 'Réduire en mini-barre' : 'Déplier les titres'}
-                aria-label={isSidebarExpanded ? 'Réduire en mini-barre' : 'Déplier les titres'}
-                className="w-7 h-12 bg-black/15 hover:bg-[#009FE3] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                title={isSidebarExpanded ? 'Réduire le menu' : 'Déplier les titres'}
+                aria-label={isSidebarExpanded ? 'Réduire le menu' : 'Déplier les titres'}
+                className="w-6 h-8 hover:bg-[#009FE3] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
               >
                 {isSidebarExpanded ? (
-                  <X className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4" />
                 ) : (
                   <ChevronRight className="w-4 h-4" />
                 )}
               </button>
             </div>
 
-            {/* Vertical Section Icons List */}
+            {/* Vertical Section Icons List (Seamless on Orange without inner boxes) */}
             <nav className="flex flex-col divide-y divide-white/15">
               {NAV_SECTIONS.map((item) => {
                 const isHovered = hoveredNavId === item.id;
                 const isActive = activeSection === item.id;
-                const bgColor =
-                  isHovered || isActive ? item.hoverHex : 'transparent';
+                const bgColor = isHovered || isActive ? item.hoverHex : 'transparent';
                 const isLime = (isHovered || isActive) && item.hoverHex === '#84BD00';
 
                 return (
@@ -187,30 +177,32 @@ export default function App() {
                     style={{ backgroundColor: bgColor }}
                     title={`${item.label} — ${item.subtitle}`}
                     className={`group relative w-full transition-colors cursor-pointer flex items-center ${
-                      isSidebarExpanded ? 'px-4 py-3.5 gap-3.5 text-left' : 'py-3.5 flex-col justify-center gap-1'
+                      isSidebarExpanded
+                        ? 'px-3.5 py-3 gap-3 text-left'
+                        : 'py-3.5 flex-col justify-center gap-1'
                     } ${isLime ? 'text-slate-950' : 'text-white'}`}
                   >
                     {/* Active Left Indicator Square Bar */}
                     {isActive && (
-                      <span className="absolute left-0 top-0 bottom-0 w-1.5 bg-white" />
+                      <span className="absolute left-0 top-0 bottom-0 w-1 bg-white" />
                     )}
 
-                    <div className="w-9 h-9 bg-black/20 flex items-center justify-center shrink-0">
+                    <div className="flex items-center justify-center shrink-0">
                       {item.icon}
                     </div>
 
                     {isSidebarExpanded ? (
                       <div className="min-w-0 flex-1">
-                        <div className="text-[10px] font-black uppercase tracking-widest opacity-85">
+                        <div className="text-[9px] font-black uppercase tracking-widest opacity-85">
                           {item.shortCode}
                         </div>
                         <div className="text-xs font-black uppercase tracking-tight truncate">
                           {item.label}
                         </div>
-                        <div className="text-[11px] opacity-90 truncate">{item.subtitle}</div>
+                        <div className="text-[10px] opacity-85 truncate">{item.subtitle}</div>
                       </div>
                     ) : (
-                      <span className="text-[10px] font-black uppercase tracking-wider leading-none">
+                      <span className="text-[9px] font-black uppercase tracking-wider leading-none">
                         {item.shortCode}
                       </span>
                     )}
@@ -221,13 +213,13 @@ export default function App() {
           </div>
 
           {/* Bottom Course Badge */}
-          <div className="p-2 border-t-2 border-white/20 bg-black/15 text-center">
+          <div className="py-2 px-1 border-t border-white/20 text-center">
             {isSidebarExpanded ? (
-              <div className="text-[11px] font-black uppercase tracking-wider py-1">
-                MODULE M101 · 15 HEURES
+              <div className="text-[10px] font-black uppercase tracking-wider">
+                MODULE M101 · 15H
               </div>
             ) : (
-              <div className="text-[10px] font-black uppercase leading-tight py-1">
+              <div className="text-[10px] font-black uppercase leading-none">
                 15H
               </div>
             )}
@@ -240,51 +232,45 @@ export default function App() {
          ===================================================================== */}
       <div
         className={`flex-1 min-w-0 transition-all duration-200 ${
-          isSidebarVisible ? (isSidebarExpanded ? 'pl-64' : 'pl-20') : 'pl-0'
+          isSidebarVisible ? (isSidebarExpanded ? 'pl-56' : 'pl-16') : 'pl-0'
         }`}
       >
-        {/* Top Square Presentation Bar */}
-        <header className="sticky top-0 z-30 bg-white border-b-4 border-[#EA5B0C] px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            {!isSidebarVisible && <div className="w-12" />}
-            <div className="w-10 h-10 bg-[#EA5B0C] text-white font-black text-sm flex items-center justify-center">
+        {/* Sleek, Compact Single-Row Top Bar (h-12) */}
+        <header className="sticky top-0 z-30 h-12 bg-white border-b-2 border-[#EA5B0C] px-3 sm:px-6 flex items-center justify-between gap-3 overflow-x-auto">
+          <div className="flex items-center gap-2.5 shrink-0">
+            {!isSidebarVisible && <div className="w-8" />}
+            <div className="w-7 h-7 bg-[#EA5B0C] text-white font-black text-[11px] flex items-center justify-center shrink-0">
               M101
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 uppercase">
-                  COURS M101
-                </span>
-                <span className="bg-[#009FE3] text-white px-2.5 py-0.5 text-[11px] font-black uppercase">
-                  15 Heures
-                </span>
-              </div>
-              <p className="text-xs font-bold text-slate-600">
-                Métier et Formation en Infrastructure Digitale · Tronc Commun 1ère Année
-              </p>
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-sm sm:text-base font-black tracking-tight text-slate-900 uppercase">
+                COURS M101
+              </span>
+              <span className="bg-[#009FE3] text-white px-1.5 py-0.5 text-[10px] font-black uppercase">
+                15H
+              </span>
+              <span className="hidden md:inline text-xs font-bold text-slate-500 border-l border-slate-300 pl-2">
+                Infrastructure Digitale
+              </span>
             </div>
           </div>
 
-          {/* Quick Jump Square Tiles in Top Bar */}
-          <div className="hidden xl:flex items-center gap-2">
-            <span className="text-[11px] font-black uppercase text-slate-500 mr-1 flex items-center gap-1">
-              <MonitorPlay className="w-4 h-4 text-[#EA5B0C]" />
-              Accès rapide :
-            </span>
+          {/* Compact Single-Line Quick Jump Buttons */}
+          <div className="hidden lg:flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             {NAV_SECTIONS.map((sec) => (
               <button
                 key={sec.id}
                 onClick={() => scrollToElement(sec.id)}
                 style={{
-                  borderColor: activeSection === sec.id ? sec.hoverHex : '#e2e8f0',
-                  backgroundColor: activeSection === sec.id ? sec.hoverHex : '#F4F8FB',
+                  borderColor: activeSection === sec.id ? sec.hoverHex : '#cbd5e1',
+                  backgroundColor: activeSection === sec.id ? sec.hoverHex : '#F8FAFC',
                 }}
-                className={`px-3 py-1.5 text-xs font-black uppercase border-2 transition-colors cursor-pointer ${
+                className={`px-2.5 py-1 text-[11px] font-extrabold uppercase border transition-colors cursor-pointer ${
                   activeSection === sec.id
                     ? sec.hoverHex === '#84BD00'
                       ? 'text-slate-950'
                       : 'text-white'
-                    : 'text-slate-800 hover:border-[#EA5B0C]'
+                    : 'text-slate-700 hover:border-[#EA5B0C] hover:text-[#EA5B0C]'
                 }`}
               >
                 {sec.label}
